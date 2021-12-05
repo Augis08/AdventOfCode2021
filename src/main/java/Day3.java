@@ -53,11 +53,11 @@ public class Day3 {
             boolean sortingCondition;
             int count1 = countNumbersWithSomeBit(bitNo, '1', oxygenGeneratorRating);
             sortingCondition = count1 < oxygenGeneratorRating.size() - count1;
-            oxygenGeneratorRating = getRelevantNumbers(bitNo, count1, sortingCondition, oxygenGeneratorRating);
+            getRelevantNumbers(bitNo, count1, sortingCondition, oxygenGeneratorRating);
 
             int count0 = countNumbersWithSomeBit(bitNo, '0', co2ScrubberRating);
             sortingCondition = count0 <= co2ScrubberRating.size() - count0;
-            co2ScrubberRating = getRelevantNumbers(bitNo, count0, sortingCondition, co2ScrubberRating);
+            getRelevantNumbers(bitNo, count0, sortingCondition, co2ScrubberRating);
             bitNo += 1;
         }
         part2Answer = Integer.parseInt(oxygenGeneratorRating.get(0), 2)
@@ -72,19 +72,17 @@ public class Day3 {
         return count;
     }
 
-    private List<String> getRelevantNumbers(int bitNo, int count, boolean sortingCondition, List<String> sortedInput) {
+    private void getRelevantNumbers(int bitNo, int count, boolean sortingCondition, List<String> sortedInput) {
         if (sortedInput.size() == 1)
-            return sortedInput;
-        List<String> listToModify = new ArrayList<>(sortedInput);
+            return;
+        List<String> listToSort = new ArrayList<>(sortedInput);
         if (sortingCondition) {
-            for (String s : sortedInput)
+            for (String s : listToSort)
                 if (s.charAt(bitNo) == '1')
-                    listToModify.remove(s);
+                    sortedInput.remove(s);
         } else
-            for (String s : sortedInput)
+            for (String s : listToSort)
                 if (s.charAt(bitNo) == '0')
-                    listToModify.remove(s);
-        sortedInput = new ArrayList<>(listToModify);
-        return sortedInput;
+                    sortedInput.remove(s);
     }
 }
